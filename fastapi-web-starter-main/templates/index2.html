@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF.js Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+</head>
+<body>
+    <div>
+        <canvas id="pdf-canvas"></canvas>
+    </div>
+    <script>
+        pdfjsLib.getDocument("/pdf_viewer").promise.then(function(pdf) {
+            pdf.getPage(1).then(function(page) {
+                var canvas = document.getElementById("pdf-canvas");
+                var context = canvas.getContext("2d");
+                var viewport = page.getViewport({scale: 1});
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                page.render({canvasContext: context, viewport: viewport});
+            });
+        });
+    </script>
+</body>
+</html>
+
+

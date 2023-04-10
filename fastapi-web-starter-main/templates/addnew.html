@@ -1,0 +1,32 @@
+{% extends 'basee.html' %}
+ 
+ {% block content %}
+<form action = "/add_project" method = "post" enctype="multipart/form-data"> 
+    <div class="mb-3">
+        <label>Title</label>
+        <input type = "text" name = "title" placeholder = "Title" class="form-control" />
+    </div> 
+    <div class="mb-3">
+        <label>Author</label>
+        <input type = "text" name = "author" placeholder = "Author" class="form-control" />
+    </div> 
+    <div class="mb-3">
+        <label>Project Type</label>
+        <input type = "text" name = "project_type" placeholder = "Project Type" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Summary</label>
+        <input type = "text" name = "summary" placeholder = "Summary" class = "form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="file">File Uplaod</label>
+        <br>
+        <input type="file" id="file" name="file">
+        <br>
+        <input type="submit" value="Upload">
+    </div>
+ 
+    <input type = "submit" value = "Submit" class="btn btn-primary mb-3"/>  
+ </form> 
+  
+{% endblock content %}
