@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Mercer Projects Library</title>
+    <link rel="stylesheet" href="{{url_for('static', path='css/styleHome.css')}}"> 
+</head>
+<body>
+    <section>
+        <header>
+            <ul>
+                <li><a href="#">Login</a></li>
+                <li><a href="{{url_for('browse_page')}}">Browse</a></li>
+                <li><a href="{{url_for('upload_page')}}">Upload</a></li>
+            </ul>
+        </header>
+        <div class="main">
+            <div class="logo">
+                <img src="{{url_for('static', path='images/logo.png')}}" height="250px" style="margin-top: 125px;">
+            </div>
+            <ul class="title1">
+                <li>Mercer University</li>
+            </ul>
+            <ul class="title2">
+                <li>Online Project Library</li>
+            </ul>
+
+            <div class="searchBox">
+                <input type="text" class="search">
+                <div class="icons">
+                    <div><img src="{{url_for('static', path='images/Search.png')}}"></div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button> Not Sure? Click Here to Browse </button>
+            </div>
+            <ul class="description">
+                <li>Welcome to the Online Project Library.<br> Here you can find a repository of projects<br>documentation over the years.</li>
+            </ul>
+        </div>
+        <div class="footer">
+            <div class="row">
+            </div>
+        </div>
+    </section>
+</body>
+</html>
