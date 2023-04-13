@@ -1,0 +1,154 @@
+﻿*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+section
+{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;   
+}
+section header
+{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 25px;
+    box-shadow: 0 0 20px rgb(255, 111, 0);
+}
+section header ul
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+section header ul li
+{
+    list-style: none;
+    margin-left: 20px;
+}
+section header ul li a
+{
+    color: #111;
+    text-decoration: none;
+    font-size: 15px;
+}
+section header ul li a:hover
+{
+    color: rgb(255, 111, 0);
+}
+section .main
+{
+    width: 580px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+section .main .title1 
+{
+    display: flex;
+}
+section .main .title1 li 
+{
+    list-style: none;
+    margin: 0 5px;
+    font-size: 38px;
+    color: rgb(255, 111, 0);
+    font-family:sans-serif ; 
+    font-weight: bold;
+}
+section .main .title2 
+{
+    display: flex;
+}
+
+section .main .title2 li 
+{
+    list-style: none;
+    margin: 0 5px;
+    font-size: 38px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+section .main .searchBox
+{
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}
+section .main .searchBox .search
+{
+    width: 100%;
+    padding: 13px;
+    padding-left: 45px;
+    padding-right: 60px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 16px;
+}
+section .main .searchBox .icons
+{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    padding: 16px 18px;
+    pointer-events: none;
+}
+
+section .main .buttons
+{
+    margin-top: 20px;
+}
+section .main .buttons button
+{
+    margin: 0 5px;
+    padding: 12px 20px;
+    color: #555;
+    font-size: 14px;
+    border:none;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    outline: none;
+}
+section .main .buttons button a
+{
+    text-decoration: none;
+    color: black;
+}
+section .main .buttons button:hover
+{
+    border: 1px solid #ccc;
+}
+section .main .description
+{
+    display: flex;
+    margin-top: 30px;
+}
+section .main .description li
+{
+    list-style: none;
+    margin: 0 5px;
+    font-size: 15px;
+    text-align: center;
+    border-style: solid;
+    background-color: lightsalmon;
+    width: 350px;
+    height: 80px;  
+    padding: 12px;
+    border: 1px solid #ccc;
+}
+
