@@ -1,4 +1,15 @@
+import io
+import sys
+import fitz
+import shutil
 from typing import List
+from PyPDF2 import PdfReader
+from pdf2image import convert_from_path
+import pypdfium2 as pdfium
+
+from PIL import Image
+
+
 
 from fastapi import FastAPI, Form, status, Request, Depends, HTTPException, File, UploadFile, Response
 from fastapi.responses import HTMLResponse, FileResponse
@@ -6,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
+
 
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
@@ -64,16 +76,25 @@ async def home(request: Request, db: Session = Depends(get_db)):
  
 @app.post("/add_project")
 async def add(request: Request, title: str = Form(...), author: str = Form(...), project_type: str = Form(...),summary: str = Form(...), file: UploadFile = File(...), db: Session = Depends(get_db)):
-    contents = await file.read()
-    with open(f"C:/Users/kushi/Desktop/fastapi-web-starter-main/uploads/{file.filename}","wb") as f:
-        f.write(contents)
 
-    new_file = models.Project(title=title, author=author, project_type=project_type, summary = summary, file_path=f"C:/Users/kushi/Desktop/fastapi-web-starter-main/uploads/{file.filename}")
+    with open(f"C:/Users/kushi/Desktop/Online_Web_Interface/uploads/{file.filename}","wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    
+    filepath=  f"C:/Users/kushi/Desktop/Online_Web_Interface/uploads/{file.filename}"
+    pdffil= pdfium.PdfDocument(filepath)
+
+    page = pdffil[0]
+    pil_image = page.render(scale=2).to_pil()
+    pil_image.save(f"C:/Users/kushi/Desktop/Online_Web_Interface/uploads/{file.filename}img.jpg")
+
+
+    
+    new_file = models.Project(title=title, author=author, project_type=project_type, summary = summary, file_path=f"C:/Users/kushi/Desktop/Online_Web_Interface/uploads/{file.filename}")
     
     db.add(new_file)
     db.commit()
     db.refresh(new_file)
-    return RedirectResponse(url=app.url_path_for("home"), status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url=app.url_path_for("Home"), status_code=status.HTTP_303_SEE_OTHER)
 
 @app.get("/upload-page")
 async def upload_page(request: Request):
