@@ -55,19 +55,16 @@ def get_db():
 templates = Jinja2Templates(directory="templates")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
-app.include_router(unsplash.router)
-app.include_router(twoforms.router)
-app.include_router(accordion.router)
-
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 @app.get("/pdf/{project_file}")
 async def pdf(project_file: str):
-    return FileResponse(project_file)
+    file_path = f"s/uploads/{project_file}"
+    return FileResponse(file_path, project_file=project_file)
 
-@app.get("/pdf-page")
-async def pdfview(request: Request):
-    return templates.TemplateResponse("pdf-view-page.html", {"request": request})
+@app.post("/pdf-page/{project_file}")
+async def pdfview(request: Request, project_file: str):
+    return templates.TemplateResponse("pdf-view-page.html", {"request": request, "project_file": project_file})
 
 @app.get("/")
 async def Home(request: Request):
@@ -91,17 +88,19 @@ async def home(request: Request, db: Session = Depends(get_db)):
  
 @app.post("/add_project")
 async def add(request: Request, title: str = Form(...), author: str = Form(...), project_type: str = Form(...),summary: str = Form(...), file: UploadFile = File(...), db: Session = Depends(get_db)):
+    path = f"./uploads/{file.filename.split('.')[0]}"
+    os.mkdir(path=path)
 
-    with open(f"C:/Users/kushi/OneDrive/Desktop/Online_Web_Interface/uploads/{file.filename}","wb") as buffer:
+    with open(f"./uploads/{file.filename.split('.')[0]}/{file.filename}","wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
-    filepath=  f"C:/Users/kushi/OneDrive/Desktop/Online_Web_Interface/uploads/{file.filename}"
+    filepath=  f"./uploads/{file.filename.split('.')[0]}/{file.filename}"
     pdffil= pdfium.PdfDocument(filepath)
 
     page = pdffil[0]
     pil_image = page.render(scale=2).to_pil()
-    pil_image.save(f"C:/Users/kushi/OneDrive/Desktop/Online_Web_Interface/uploads/{file.filename.split('.')[0]}_img.jpg")
-    new_file = models.Project(title=title, author=author, project_type=project_type, summary = summary, file_path=f"uploads/{file.filename}", img_file_path = f"../uploads/{file.filename.split('.')[0]}_img.jpg")
+    pil_image.save(f"./uploads/{file.filename.split('.')[0]}/{file.filename.split('.')[0]}_img.jpg")
+    new_file = models.Project(title=title, author=author, project_type=project_type, summary = summary, file_path=f"{file.filename.split('.')[0]}/{file.filename}", img_file_path = f"{file.filename.split('.')[0]}/{file.filename.split('.')[0]}_img.jpg")
     
     db.add(new_file)
     db.commit()
