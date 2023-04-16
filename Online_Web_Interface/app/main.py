@@ -2,21 +2,23 @@ import io
 import sys
 import fitz
 import shutil
-from typing import List
+from typing import List, Optional
 from PyPDF2 import PdfReader
 from pdf2image import convert_from_path
 import pypdfium2 as pdfium
-
+import sqlite3
 from PIL import Image
-
+from models import Project
 
 
 from fastapi import FastAPI, Form, status, Request, Depends, HTTPException, File, UploadFile, Response
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
+
+from jinja2 import Environment, FileSystemLoader
 
 
 from sqlalchemy import create_engine, Column, Integer, String
@@ -53,18 +55,43 @@ def get_db():
         db.close()
 
 templates = Jinja2Templates(directory="templates")
+env = Environment(loader=FileSystemLoader('templates'))
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.mount("/pdfjs", StaticFiles(directory="pdfjs"), name="pdfjs")
 
-@app.get("/pdf/{project_file}")
-async def pdf(project_file: str):
-    file_path = f"s/uploads/{project_file}"
-    return FileResponse(file_path, project_file=project_file)
+def get_pdf_data(id):
+    conn = sqlite3.connect("app.db")
+    cursor= conn.cursor()
 
-@app.post("/pdf-page/{project_file}")
-async def pdfview(request: Request, project_file: str):
-    return templates.TemplateResponse("pdf-view-page.html", {"request": request, "project_file": project_file})
+    cursor.execute("SELECT file_path FROM project WHERE id=?", (id,))
+    pdf_data = cursor.fetchone()[0]
+
+    conn.close()
+
+    return pdf_data
+
+
+@app.get("/pdf/{project_id}")
+async def pdf(request: Request, project_id: int):
+
+    pdf_data = get_pdf_data(project_id)
+
+    tmeplate = env.get_template('pdf-view-page.html')
+    context = {'pdf_data': pdf_data}
+    html_content=tmeplate.render(context)
+
+    return templates.TemplateResponse("pdf-view-page.html", {"request": request, "pdf_data": pdf_data})
+
+@app.get("/search/")
+def search(
+    request: Request, db: Session = Depends(get_db), query: Optional[str] = None
+):
+    projs = crud.search_proj(query, db = db)
+    return templates.TemplateResponse(
+        "browse-page.html", {"request": request, "projs": projs}
+    )
 
 @app.get("/")
 async def Home(request: Request):
