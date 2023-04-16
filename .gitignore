@@ -1,0 +1,15 @@
+venv/
+Online_Web_Interface/app/__pycache__/__init__.cpython-310.pyc
+Online_Web_Interface/app/__pycache__/main.cpython-310.pyc
+app.db
+Online_Web_Interface/app/__pycache__/__init__.cpython-311.pyc
+Online_Web_Interface/app/__pycache__/crud.cpython-311.pyc
+Online_Web_Interface/app/__pycache__/database.cpython-311.pyc
+Online_Web_Interface/app/__pycache__/main.cpython-311.pyc
+Online_Web_Interface/app/__pycache__/models.cpython-311.pyc
+Online_Web_Interface/app/__pycache__/schemas.cpython-311.pyc
+Online_Web_Interface/app/library/__pycache__/__init__.cpython-311.pyc
+Online_Web_Interface/app/library/__pycache__/helpers.cpython-311.pyc
+Online_Web_Interface/app/main.py
+Online_Web_Interface/app/main.py
+Online_Web_Interface/requirements.txt
