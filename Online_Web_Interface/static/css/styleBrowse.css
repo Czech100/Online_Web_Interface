@@ -118,11 +118,11 @@ section header ul li a:hover
     border: 1px solid #a2a2a2;
     margin: auto 145px;
     display: flexbox;
+    transition: box-shadow .5s;
 }
-.results_card:hover
-{
+.results_card:hover {
     box-shadow: 0 0 5px rgb(255, 111, 0);
-}    
+    }    
 
 .results .results_box .results_card .results_image
 {
@@ -142,34 +142,49 @@ section header ul li a:hover
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transition:0.3s;
+    transition:0.5s;
 }
 .results .results_box .results_card:hover .results_image img
 {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .results_tag {
     padding: 5px;
     max-width: 90%;
+    max-height: 100%;
     margin: 0 auto;
+    overflow: hidden;
+    text-overflow: ellipsis; 
     }
-
 .results .results_box .results_card .results_tag p {
-        font-family: sans-serif;
-        font-size: 12px;
+        /* font-family: sans-serif; */
         margin: 8px 0;
     }
 
-.results .results_box .results_card .results_tag .results_btn
-{
+.author {
+    font-weight: bold;
+    font-size: larger;
+}
+.summary {
+    font-size: 12px;
+    text-align: left;
+    padding-left: 5px;
+    font-family: serif;
+}
+
+
+.results .results_box .results_card .results_tag .results_btn{
     padding: 8px 20px;
     border: 2px solid rgb(255, 111, 0);
     text-decoration: none;
     color: #000;
     font-size: 12px;
+    transition: background-color .5s;
+    }
+.results_btn:hover {
+    background-color:rgba(255, 111, 0, 0.247)
 }
-
 
 .dropdown {
     position: absolute;
