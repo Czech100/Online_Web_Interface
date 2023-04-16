@@ -8,7 +8,7 @@ from pdf2image import convert_from_path
 import pypdfium2 as pdfium
 import sqlite3
 from PIL import Image
-from models import Project
+# from models import Project
 
 
 from fastapi import FastAPI, Form, status, Request, Depends, HTTPException, File, UploadFile, Response
@@ -29,9 +29,9 @@ from .import crud, models, schemas
 from .database import SessionLocal, engine
 
 from .library.helpers import *
-from app.routers import twoforms, unsplash, accordion
+# from app.routers import twoforms, unsplash, accordion
 
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 Base = declarative_base()
@@ -59,7 +59,7 @@ env = Environment(loader=FileSystemLoader('templates'))
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
-app.mount("/pdfjs", StaticFiles(directory="pdfjs"), name="pdfjs")
+# app.mount("/pdfjs", StaticFiles(directory="pdfjs"), name="pdfjs")
 
 def get_pdf_data(id):
     conn = sqlite3.connect("app.db")

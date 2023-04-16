@@ -34,26 +34,24 @@
                 </form>
             </div>
 
-            <div class="results_box">
+            <div class="results-shelf"></div>
+                <div class="results_box">
 
-                {% for rs in project %}
+                    {% for rs in project %}
 
-
-
-                <div class="results_card">
-                    <div class="results_image">
-                        <img src= "uploads/{{rs.img_file_path}}" alt="">
+                    <div class="results_card">
+                        <div class="results_image">
+                            <img src= "uploads/{{rs.img_file_path}}" alt="">
+                        </div>
+                        <div class="results_tag">                     
+                            <p class="author">{{ rs.author}}</p>
+                            <p class="type">{{ rs.project_type}}</p>
+                            <p class="summary">{{rs.summary}}</p>
+                            <a href="pdf/{{rs.id}}" class="results_btn">Learn More</a>
+                        </div>
                     </div>
-                    <div class="results_tag">                     
-                        <p class="author">{{ rs.author}}</p>
-                        <p class="type">{{ rs.project_type}}</p>
-                        <p class="summary">{{rs.summary}}</p>
-                        <a href="pdf/{{rs.id}}" class="results_btn">Learn More</a>
-                    </div>
+                    {% endfor %} 
                 </div>
-                {% endfor %} 
-            
-
             </div>
         </div>
     </section>
