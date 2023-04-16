@@ -3,7 +3,7 @@
     <head>
         <title>PDF Viewer</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
-        <link rel="stylesheet" href="{{ url_for('static', path='css/pdf-view-css.css') }}">
+        <link rel="stylesheet" href="http://127.0.0.1:8080/static/css/pdf-view-css.css">
     </head>
     <body>
         <section>
@@ -12,13 +12,13 @@
                 <h1 class="page-header text-center">PDF Viewer</h1>
             </div>
             <ul>
-                <li><a href="{{url_for('Home')}}">Home</a></li>
-                <li><a href="{{url_for('browse_page')}}">Browse</a></li>
+                <li><a href="http://127.0.0.1:8080/">Home</a></li>
+                <li><a href="http://127.0.0.1:8080/browse-page">Browse</a></li>
                 <li><a href="#">Login</a></li>
             </ul>
         </header>
         <div class ="pdf-js" style="position: relative;width: 50vw; height:50vh;overflow: hidden;padding-top: 56.25%;">
-            <iframe id="pdf-js-viewer" src="pdf/{{ project_file }}" title="webviewer" frameborder="10" style="height: 100%;width:100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: 0 auto;"></iframe>
+            <iframe id="pdf-js-viewer" src="http://127.0.0.1:8080/pdfjs/web/viewer.html?file=http://127.0.0.1:8080/uploads/{{ pdf_data }}" title="webviewer" frameborder="10" style="height: 100%;width:100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: 0 auto;"></iframe>
         </div>
         </section>
     </body>

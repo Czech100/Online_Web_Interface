@@ -9,3 +9,10 @@ def create_project(db: Session, project: schemas.ProjectCreate):
     db.commit()
     db.refresh(db_project)
     return db_project
+
+def get_file_path(db:Session, file_path:str):
+    return db.query(models.Project).filter(models.Project.file_path == file_path).first
+
+def search_proj(query:str, db:Session):
+    projs = db.query(models.Project).filter(models.Project.title.contains(query))
+    return projs

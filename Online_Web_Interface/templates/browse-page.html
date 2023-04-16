@@ -26,10 +26,12 @@
                         <a href="#">Client</a> 
                     </div>
                 </div>
+                <form action="/search/" method="get">
                 <input type="text" class="search">
                 <div class="icons">
                     <div><img src="{{url_for('static', path='images/Search.png')}}"></div>
                 </div>
+                </form>
             </div>
 
             <div class="results_box">
@@ -46,7 +48,7 @@
                         <p class="author">{{ rs.author}}</p>
                         <p class="type">{{ rs.project_type}}</p>
                         <p class="summary">{{rs.summary}}</p>
-                        <a href="pdf-page/{{rs.file_path}}" class="results_btn">Learn More</a>
+                        <a href="pdf/{{rs.id}}" class="results_btn">Learn More</a>
                     </div>
                 </div>
                 {% endfor %} 
