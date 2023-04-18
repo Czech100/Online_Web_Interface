@@ -8,7 +8,7 @@ from pdf2image import convert_from_path
 import pypdfium2 as pdfium
 import sqlite3
 from PIL import Image
-from models import Project
+
 
 
 from fastapi import FastAPI, Form, status, Request, Depends, HTTPException, File, UploadFile, Response
@@ -34,7 +34,7 @@ from app.routers import twoforms, unsplash, accordion
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-Base = declarative_base()
+
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
@@ -85,10 +85,8 @@ async def pdf(request: Request, project_id: int):
     return templates.TemplateResponse("pdf-view-page.html", {"request": request, "pdf_data": pdf_data})
 
 @app.get("/search/")
-def search(
-    request: Request, db: Session = Depends(get_db), query: Optional[str] = None
-):
-    projs = crud.search_proj(query, db = db)
+def search(request: Request, query: Optional[str], db: Session = Depends(get_db)):
+    projs = db.query(models.Project).filter(models.Project.title.contains(query)).all()
     return templates.TemplateResponse(
         "browse-page.html", {"request": request, "projs": projs}
     )
@@ -97,10 +95,14 @@ def search(
 async def Home(request: Request):
     return templates.TemplateResponse("home-page.html", {"request": request})
 
+@app.get("/indexHome")
+async def Home(request: Request):
+    return templates.TemplateResponse("indexHome.html", {"request": request})
+
 @app.get("/browse-page")
 async def browse_page(request: Request, db:Session = Depends(get_db)):
-    project = db.query(models.Project).order_by(models.Project.id.desc())
-    return templates.TemplateResponse("browse-page.html", {"request": request, "project": project})
+    projs = db.query(models.Project).all()
+    return templates.TemplateResponse("browse-page.html", {"request": request, "project": projs})
     
 @app.get("/projects_all")
 def read_projects(db:Session = Depends(get_db)):
@@ -110,7 +112,7 @@ def read_projects(db:Session = Depends(get_db)):
 
 @app.get("/index")
 async def home(request: Request, db: Session = Depends(get_db)):
-    project = db.query(models.Project).order_by(models.Project.id.desc())
+    project = db.query(models.Project).all()
     return templates.TemplateResponse("index.html", {"request": request, "project": project})
  
 @app.post("/add_project")
