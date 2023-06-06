@@ -91,6 +91,18 @@ def search(request: Request, query: Optional[str], db: Session = Depends(get_db)
         "browse-page.html", {"request": request, "projs": projs}
     )
 
+@app.get("/dr.hill/")
+def drhill(request: Request, db:Session= Depends(get_db)):
+    filter = "Dr. Stephen Hill"
+    projs = db.query(models.Project).filter(models.Project.project_manager.contains(filter)).all()
+    return templates.TemplateResponse("browse-page.html", {"request": request, "projs": projs})
+
+@app.get("/erin_lake/")
+def elakeS(request: Request, db:Session= Depends(get_db)):
+    filter = "Erin Lake"
+    projs = db.query(models.Project).filter(models.Project.project_manager.contains(filter)).all()
+    return templates.TemplateResponse("browse-page.html", {"request": request, "projs": projs})
+
 @app.get("/")
 async def Home(request: Request):
     return templates.TemplateResponse("home-page.html", {"request": request})
@@ -101,8 +113,8 @@ async def Home(request: Request):
 
 @app.get("/browse-page")
 async def browse_page(request: Request, db:Session = Depends(get_db)):
-    projs = db.query(models.Project).all()
-    return templates.TemplateResponse("browse-page.html", {"request": request, "project": projs})
+    project = db.query(models.Project).all()
+    return templates.TemplateResponse("browse-page.html", {"request": request, "projs": project})
     
 @app.get("/projects_all")
 def read_projects(db:Session = Depends(get_db)):
@@ -116,7 +128,7 @@ async def home(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse("index.html", {"request": request, "project": project})
  
 @app.post("/add_project")
-async def add(request: Request, title: str = Form(...), author: str = Form(...), project_type: str = Form(...),summary: str = Form(...), file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def add(request: Request, title: str = Form(...), author: str = Form(...), project_type: str = Form(...),summary: str = Form(...), project_manager: str = Form(...), semester: str = Form(...), file: UploadFile = File(...), db: Session = Depends(get_db)):
     path = f"./uploads/{file.filename.split('.')[0]}"
     os.mkdir(path=path)
 
@@ -129,7 +141,7 @@ async def add(request: Request, title: str = Form(...), author: str = Form(...),
     page = pdffil[0]
     pil_image = page.render(scale=2).to_pil()
     pil_image.save(f"./uploads/{file.filename.split('.')[0]}/{file.filename.split('.')[0]}_img.jpg")
-    new_file = models.Project(title=title, author=author, project_type=project_type, summary = summary, file_path=f"{file.filename.split('.')[0]}/{file.filename}", img_file_path = f"{file.filename.split('.')[0]}/{file.filename.split('.')[0]}_img.jpg")
+    new_file = models.Project(title=title, author=author, project_type=project_type, summary = summary, project_manager=project_manager, semester= semester, file_path=f"{file.filename.split('.')[0]}/{file.filename}", img_file_path = f"{file.filename.split('.')[0]}/{file.filename.split('.')[0]}_img.jpg")
     
     db.add(new_file)
     db.commit()

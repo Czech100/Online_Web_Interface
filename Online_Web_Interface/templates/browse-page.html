@@ -19,17 +19,21 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="#">Type</a> 
             <a href="#">Semester</a>
-            <a href="#">Manager</a>
-            <a href="#">Client</a> 
+            <h2>Manager</h2>
+                <a href = "/erin_lake/">Erin Lake</a>
+                <a href = "/dr.hill/">Dr. Stephen Hill</a>
+            <h2>Client</h2>
+                <a href="#">Dr. Vance</a> 
           </div>
         <div id="browse">
         <div id="open-filters" style="cursor: pointer;" onclick="openNav()">&#9776; Filters</div>
         <div class="results">
             
             <div class="searchBox">
-                <form action="/search/">
+                <form action="/search/" id="search-form">
                 <input type="text" name = "query" class="search" placeholder="Search">
                 <button class="search-button" type="submit">Search <img src="{{url_for('static', path='images/Search.png')}}"></button>
+                <button class="reset-button" onclick="reset()">Reset</button>
                 </form>
             </div>
             
@@ -66,6 +70,10 @@
           document.getElementById("mySidenav").style.width = "0";
           document.getElementById("browse").style.marginLeft= "0";
           document.getElementById("open-filters").style.visibility = "visible";
+        }
+
+        function reset(){
+            location.assign = "http://127.0.0.1:8080/browse-page"; 
         }
         </script>
 </body>

@@ -11,7 +11,10 @@ class Project(Base):
     author = Column(String, index=True)
     project_type = Column(String, index=True)
     summary = Column(String, index=True)
+    semester = Column(String, index=True)
     file_path = Column(String(255), index=True)
+    project_manager = Column(String, index=True)
+    project_client = Column(String, index=True)
     img_file_path = Column(String(255), index=True)
 
 

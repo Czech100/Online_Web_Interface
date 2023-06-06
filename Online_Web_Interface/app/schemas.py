@@ -7,6 +7,9 @@ class ProjectBase(BaseModel):
     author: str
     project_type: str
     summary: str
+    semester:str
+    project_manager: str
+    project_client:str
     file_path: str
     img_file_path: str
 
@@ -19,6 +22,9 @@ class Project(ProjectBase):
     author: str
     project_type: str
     summary: str
+    semester:str
+    project_manager: str
+    project_client:str
     file_path: str
     img_file_path: str
 
